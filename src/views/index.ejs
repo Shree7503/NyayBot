@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prestigious law firm offering expert legal services and consultations.">
+    <title>NyayBot</title>
+    <link rel="icon" href="icon.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .chatbot-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .chatbot-message {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+            font-size: 14px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        #chatbotAction {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #chatbotAction p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        #chatbotAction button {
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+
+        #chatbotAction button:hover {
+            background-color: #555;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #000000;
+            /* Black */
+            color: #f5c553;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            /* Gold */
+            height: 100px;
+            /* Increased height for a more substantial header */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 60px;
+            /* Increased padding for a more balanced look */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+
+            border-bottom: 4px solid #f5c553;
+            ;
+            /* Thicker gold border */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 140px;
+            /* Slightly larger logo for better prominence */
+        }
+
+        .nav-links {
+
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            margin-left: 80px;
+            /* Increased margin for better spacing */
+        }
+
+        .nav-links ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 60px;
+            /* Increased gap for a more spacious layout */
+        }
+
+        .nav-links ul li a {
+            text-decoration: none;
+            color: #f5c553;
+            /* Gold */
+            font-weight: 700;
+            font-size: 20px;
+            /* Larger font size for better readability */
+            transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-links ul li a:hover {
+            color: #ffffff;
+            /* White on hover */
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+            transform: translateY(-2px);
+            /* Subtle hover effect */
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                height: auto;
+                padding: 20px;
+                box-shadow: none;
+                border-bottom: none;
+            }
+
+            .nav-links {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            .nav-links ul {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+            }
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            /* Increased gap for a more polished look */
+            font-size: 18px;
+            /* Larger font size for better readability */
+        }
+
+        .contact-info div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            /* Increased gap for better spacing */
+        }
+
+        .phone-icon,
+        .email-icon {
+            color: #f5c553;
+            /* Gold */
+        }
+
+        .select-language {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            /* Increased gap for better alignment */
+            font-size: 18px;
+            /* Larger font size for better readability */
+            color: #f5c553;
+            /* Gold */
+            cursor: pointer;
+            border: 1px solid #f5c553;
+            padding: 8px 20px;
+            /* Increased padding for a more balanced look */
+            border-radius: 8px;
+            /* Rounded corners for a modern look */
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            margin-left: 10px;
+            /* Shifted slightly to the left */
+        }
+
+        .select-language:hover {
+            background-color: #f5c553;
+            /* Gold background on hover */
+            color: #000000;
+            /* Black text on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            /* Subtle shadow on hover */
+        }
+
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            height: calc(100vh - 100px);
+            /* Adjusted height to match new header height */
+            margin-top: 0;
+            /* No margin needed */
+        }
+
+        .image-wrapper {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            animation: scroll 150s linear infinite;
+            /* Slower speed for smoother effect */
+        }
+
+        .image-wrapper img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            filter: blur(0.5px);
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        .text-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            color: #f5c553;
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            font-weight: 700;
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text-overlay h1,
+        .text-overlay p {
+            margin: 20px 10px;
+            padding: 10px;
+            position: relative;
+            display: inline-block;
+            font-size: 4rem;
+            background-color: transparent;
+            width: 100%;
+            font-family: 'Garamond', serif;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .text-overlay p {
+            font-size: 2rem;
+            margin: 20px 0;
+            /* Add margin to create space between paragraphs */
+            line-height: 1.5;
+            /* Add line-height to increase space between lines */
+            gap: 2px;
+        }
+
+        /* Animation for each letter */
+        .text-overlay span {
+            display: inline-block;
+            opacity: 0;
+            animation: typing 4s steps(40, end) forwards;
+        }
+
+        @keyframes typing {
+            0% {
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+
+
+        /* Adjust animation timing */
+        .text-overlay h1 span {
+            animation-duration: 5s;
+        }
+
+        .text-overlay p span {
+            animation-duration: 7s;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                height: auto;
+                padding: 20px;
+                box-shadow: none;
+                border-bottom: none;
+            }
+
+            .nav-links {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            .nav-links ul {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+            }
+
+            .contact-info {
+                margin-top: 10px;
+                font-size: 16px;
+                gap: 20px;
+                /* Increased gap for better spacing on smaller screens */
+            }
+
+            .select-language {
+                margin-top: 10px;
+                margin-left: 0;
+                /* Reset margin-left for smaller screens */
+            }
+
+            .image-container {
+                height: 400px;
+                /* Adjust height for smaller screens */
+            }
+
+            .text-overlay {
+                font-size: 18px;
+                /* Adjust font size for smaller screens */
+                padding: 10px;
+            }
+
+            .text-overlay h1,
+            .text-overlay p {
+                font-size: 1.5rem;
+                /* Adjust font size for smaller screens */
+                border: 1px solid #f5c553;
+                /* Adjust border for smaller screens */
+            }
+        }
+
+        .section-boundary {
+            position: relative;
+            width: 100%;
+            /* Full width of the viewport */
+        }
+
+        .section-boundary::before {
+            content: "";
+            position: absolute;
+            /* Absolute positioning within the container */
+            left: 0;
+            width: 100%;
+            /* Full width of the container */
+            height: 6px;
+            /* Thickness of the line */
+            background-color: #f5c553;
+            /* Gold color */
+            z-index: 10;
+            /* Ensure it is above other content */
+        }
+
+
+
+        /* Style for the About Us section */
+        .about-us {
+            background-color: #000000;
+            /* Black background */
+            color: #f5c553;
+            /* Gold text */
+            padding: 40px 20px;
+            /* Padding around the section */
+        }
+
+        .about-us {
+            background-color: #000000;
+            /* Black background for contrast */
+            color: #f5c553;
+            /* Gold text for consistency */
+            padding: 20px;
+            /* Padding around the section */
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            /* Space between image and text */
+            max-width: 1200px;
+            /* Limit the maximum width */
+            margin: 0 auto;
+            /* Center the content horizontally */
+        }
+
+        .about-image {
+            width: 300px;
+            /* Fixed width for image */
+            height: auto;
+            /* Maintain aspect ratio */
+
+        }
+
+        .about-text {
+            flex: 1;
+            /* Take up remaining space */
+        }
+
+        .about-text h2 {
+            margin-top: 0;
+            font-size: 2rem;
+            /* Larger font size for headings */
+        }
+
+        .about-text p {
+            font-size: 1rem;
+            /* Standard font size for paragraphs */
+            line-height: 1.5;
+            /* Improve readability */
+        }
+
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+                /* Stack image and text vertically on smaller screens */
+                align-items: flex-start;
+                /* Align items to the start */
+            }
+
+            .about-image {
+                width: 100%;
+                /* Full width on smaller screens */
+                margin-bottom: 20px;
+                /* Space between image and text */
+            }
+        }
+
+        /* Boundary line between sections */
+        .section-boundary {
+            position: relative;
+            width: 100%;
+            /* Full width of the viewport */
+        }
+
+        .section-boundary::before {
+            content: "";
+            position: Absolute;
+            /* Use absolute positioning within the container */
+            left: 0;
+            width: 100%;
+            /* Full width of the container */
+            height: 4px;
+            /* Adjust thickness */
+            background-color: #f5c553;
+            /* Gold color */
+            z-index: 10;
+            /* Ensure it's above other content */
+        }
+
+
+
+        .our-services {
+            background-color: #000000;
+            /* Black background */
+            color: #f5c553;
+            /* Gold text */
+            padding: 40px 20px;
+            /* Padding around the section */
+        }
+
+        .our-services h2 {
+            text-align: center;
+            /* Center align the heading */
+            font-size: 2.5rem;
+            /* Larger font size for the heading */
+            margin-bottom: 40px;
+            /* Space below the heading */
+        }
+
+        .services-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            /* Space between cards */
+            max-width: 100%;
+            /* Full width */
+            margin: 0 auto;
+            /* Center the content */
+            padding: 0 20px;
+            /* Optional padding to avoid content touching the edges */
+        }
+
+        .service-card {
+            position: relative;
+            width: calc(20% - 20px);
+            /* Five cards in a row with gap adjustment */
+            height: 400px;
+            /* Adjust height for larger cards */
+            perspective: 1000px;
+            /* Create perspective for 3D effect */
+            box-sizing: border-box;
+            /* Ensure padding and border are included in the width/height calculation */
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backface-visibility: hidden;
+            border: 2px solid #f5c553;
+            /* Gold border */
+            border-radius: 10px;
+            /* Rounded corners */
+            font-size: 2rem;
+            /* Larger font size for text */
+            text-align: center;
+            transition: transform 0.6s;
+            /* Smooth rotation */
+        }
+
+        .card-front {
+            background-color: #1c1c1c;
+            /* Dark background for front */
+            color: #f5c553;
+            /* Gold text */
+        }
+
+        .card-back {
+            background-color: #333;
+            /* Darker background for back */
+            color: #f5c553;
+            /* Gold text */
+            transform: rotateY(180deg);
+            /* Rotate back side */
+            font-size: 0.87rem;
+            /* Adjust the font size to a smaller size */
+        }
+
+
+        .service-card:hover .card-front {
+            transform: rotateY(180deg);
+            /* Rotate front side */
+        }
+
+        .service-card:hover .card-back {
+            transform: rotateY(0);
+            /* Reveal back side */
+        }
+
+        @media (max-width: 768px) {
+            .services-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .service-card {
+                width: 100%;
+                /* Adjust width for smaller screens */
+                height: 300px;
+                /* Adjust height for smaller screens */
+            }
+        }
+
+        .our-services-boundary {
+            border-bottom: 4px solid #f5c553;
+            /* Gold boundary line */
+            margin: 0;
+            /* Remove default margin */
+            padding: 0;
+            /* Remove default padding */
+            width: 100%;
+            /* Full width */
+            box-sizing: border-box;
+            /* Include border in element's total width */
+        }
+
+        .review-section {
+            background-color: #000000;
+            /* Match page theme */
+            color: #f5c553;
+            /* Gold text */
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .review-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+
+        .review-slider {
+            position: relative;
+            display: flex;
+            overflow: hidden;
+            justify-content: center;
+            /* Center the review slides */
+        }
+
+        .review-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 20px;
+            border: 2px solid #f5c553;
+            border-radius: 10px;
+            background-color: #1c1c1c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Center content horizontally */
+            justify-content: center;
+            /* Center content vertically */
+            text-align: center;
+            /* Center text */
+        }
+
+        .review-content {
+            font-size: 1.5rem;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .quote-mark {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .review-author {
+            text-align: right;
+            font-style: italic;
+        }
+
+        .slide-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #f5c553;
+            border: none;
+            color: #000000;
+            font-size: 2rem;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 50%;
+            /* Make buttons circular */
+            z-index: 1000;
+            /* Ensure the buttons are on top */
+        }
+
+        .slide-button:hover {
+            background-color: #000000;
+            color: #f5c553;
+        }
+
+        .left-slide-button {
+            left: 10px;
+        }
+
+        .right-slide-button {
+            right: 10px;
+        }
+
+        .sectioN-boundary {
+            border-top: 4px solid #f5c553;
+            /* Gold boundary line */
+            margin: 40px 0;
+            /* Space around the line */
+            width: 100%;
+            /* Full width */
+        }
+
+        /* Footer Styles */
+        /* Font Awesome Icons */
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+        .footer {
+            background-color: #000000;
+            /* Black background */
+            color: #f5c553;
+            /* Gold text */
+            padding: 40px 20px;
+            font-size: 1rem;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin: 0 20px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #f5c553;
+            padding-bottom: 5px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #f5c553;
+            text-decoration: none;
+        }
+
+        .footer-section ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Container for social media icons */
+        .social-media {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        /* Styling for each social media icon */
+        .social-icon {
+            color: #f5c553;
+            /* Gold color */
+            font-size: 2.5rem;
+            /* Larger icon size */
+            margin: 0 15px;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        /* Hover effect for icons */
+        .social-icon:hover {
+            color: #ffffff;
+            /* Color when hovering */
+            transform: scale(1.2);
+            /* Slightly enlarge on hover */
+        }
+
+        /* Specific colors for each social media platform */
+        .social-icon.instagram {
+            color: #e4405f;
+            /* Instagram color */
+        }
+
+        .social-icon.facebook {
+            color: #1877f2;
+            /* Facebook color */
+        }
+
+        .social-icon.twitter {
+            color: #1da1f2;
+            /* Twitter color */
+        }
+
+        /* Styling for the footer section */
+        .footer-bottom {
+            text-align: center;
+            padding: 10px;
+            border-top: 2px solid #f5c553;
+            /* Gold border */
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo" aria-label="Law Firm Logo">
+            <img src="icon.png" alt="Law Firm Logo">
+        </div>
+        <div class="nav-links" aria-label="Main Navigation">
+            <ul>
+                <li><a href="/info">LAWYERS</a></li>
+                <li><a href="#review">REVIEWS</a></li>
+                <li><a href="/">HOME</a></li>
+                <li><a href="#footer">CONTACT US</a></li>
+            </ul>
+        </div>
+        <div class="contact-info" aria-label="Contact Information">
+            <div class="phone-icon" aria-label="Phone Number"></div>
+
+        </div>
+        <div class="select-language" aria-label="Select Language">
+            <span>Select Language:</span>
+            <div id="google_element"></div>
+            <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+            <script>
+                function loadGoogleTranslate() {
+                    new google.translate.TranslateElement("google_element");
+                }
+            </script>
+        </div>
+    </header>
+
+    <div class="image-container">
+        <div class="image-wrapper">
+            <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="HD Quality Image">
+            <img src="https://images.pexels.com/photos/159832/justice-law-case-hearing-159832.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt="HD Quality Image">
+            <img src="https://images.pexels.com/photos/6077326/pexels-photo-6077326.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt="HD Quality Image">
+            <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="HD Quality Image">
+            <img src="https://cdn.pixabay.com/photo/2024/04/06/17/58/ai-generated-8679746_960_720.jpg"
+                alt="HD Quality Image">
+        </div>
+        <div class="text-overlay">
+            <h1 data-text="Explore Me">Welcome To NyayBot – Your Trusted Legal Companion</h1>
+            <p data-text="Bridging the Gap Between Justice and Citizens">Bridging the Gap Between Justice and Citizens
+            </p>
+        </div>
+    </div>
+
+
+    <div class="section-boundary"></div>
+    <section class="about-us">
+        <div class="about-content">
+            <img src="C:\Users\saura\OneDrive\Desktop\NyayBot\symbol-removebg-preview.png" alt="About Us Image"
+                class="about-image">
+            <div class="about-text">
+                <h2>About Us</h2>
+                <p>NyayBot is an innovative chatbot designed to bridge the trust gap between the Indian judicial system
+                    and its citizens. By leveraging advanced AI and natural language processing, NyayBot provides users
+                    with reliable and accessible legal information, guidance, and support. Its user-friendly interface
+                    and comprehensive knowledge base aim to demystify legal processes, making it easier for individuals
+                    to navigate the complexities of the judicial system. Whether seeking advice, understanding legal
+                    rights, or finding information on legal procedures, NyayBot is committed to delivering accurate and
+                    timely assistance, fostering greater transparency and confidence in the legal framework.</p>
+            </div>
+        </div>
+
+
+        <section class="about-us">
+            <!-- Existing "About Us" section code here -->
+        </section>
+
+        <div class="section-boundary"></div>
+        <section id="services" class="services"> <!-- Boundary line -->
+
+            <section class="our-services">
+
+                <h2>Our Services</h2>
+                <div class="services-container">
+                    <div class="service-card">
+                        <div class="card-front">Judiciary Awareness Service</div>
+                        <div class="card-back">The Judiciary Awareness Service is designed to empower citizens by
+                            providing comprehensive and accessible information about the Indian judiciary system. This
+                            service offers a clear understanding of the structure, functioning, and processes of courts
+                            in India, helping individuals navigate the legal system with confidence. It includes
+                            detailed explanations of legal rights, the role of various courts, how to file cases, and
+                            what to expect during legal proceedings. Whether you are seeking to understand your rights,
+                            need guidance on legal procedures, or want to stay informed about recent judicial
+                            developments.</div>
+                    </div>
+                    <div class="service-card">
+                        <div class="card-front">Judiciary Insights</div>
+                        <div class="card-back">Judiciary Insights provides comprehensive information on the Department
+                            of Justice (DoJ) in India. It educates users about the structure and functions of the DoJ,
+                            the various courts and their jurisdictions, the number of judges in each court, and current
+                            statistics on pending and ongoing cases. This service is designed to enhance public
+                            understanding of the Indian judiciary, making complex legal information accessible to all.
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="card-front">E-Judiciary Essentials</div>
+                        <div class="card-back">E-Judiciary Essentials is a comprehensive digital service designed to
+                            streamline interactions with the judiciary. It offers tools for managing e-fines, accessing
+                            e-courts, and watching live streams of court cases. Users can view and pay electronic fines,
+                            file and track cases online, and monitor live court proceedings, enhancing transparency and
+                            accessibility in the judicial process.</div>
+                    </div>
+                    <div class="service-card">
+                        <div class="card-front">Tele Law Services</div>
+                        <div class="card-back">Tele-Law Services provide remote legal assistance through
+                            telecommunication technologies, making legal support more accessible to individuals,
+                            especially in underserved or remote areas. This service connects clients with legal
+                            professionals via phone or video consultations, allowing them to receive legal advice, file
+                            petitions, and resolve issues without needing to visit a physical office. By leveraging
+                            technology, Tele-Law Services aim to bridge gaps in legal accessibility, ensuring that
+                            individuals can obtain timely and effective legal guidance regardless of their location.
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="card-front">Legal Updates</div>
+                        <div class="card-back">Legal Updates refer to the ongoing process of informing individuals and
+                            legal professionals about recent changes, developments, and news in the legal field. This
+                            includes updates on new laws, amendments to existing legislation, important judicial
+                            decisions, and regulatory changes. Staying informed about these updates is crucial for
+                            ensuring compliance with the latest legal standards and for making informed legal decisions.
+                            Legal updates are typically disseminated through newsletters, legal blogs, and official
+                            channels, providing valuable information to help individuals and organizations navigate the
+                            evolving legal landscape.</div>
+                    </div>
+                </div>
+            </section>
+            <div class="our-services-boundary"></div>
+            <section id="review" class="review">
+                <div class="review-section">
+                    <h2>Client Reviews</h2>
+                    <div class="review-slider">
+                        <div class="review-slide">
+                            <div class="review-content">
+                                <span class="quote-mark">“</span>
+                                Excellent service From start to finish, the team demonstrated exceptional
+                                professionalism and dedication. They guided me through every step of the legal process
+                                with clarity and patience. Their expertise and support made a complex situation much
+                                more manageable.
+
+                                <span class="quote-mark">”</span>
+                            </div>
+                            <p class="review-author">- Rajesh Verma</p>
+                        </div>
+                        <div class="review-slide">
+                            <div class="review-content">
+                                <span class="quote-mark">“</span>
+                                Highly recommend! The team provided exceptionally clear and concise legal advice that
+                                made the entire process remarkably stress-free. Their ability to break down complex
+                                legal concepts into understandable terms was invaluable.
+                                <span class="quote-mark">”</span>
+                            </div>
+                            <p class="review-author">- Priya Nair</p>
+                        </div>
+                        <div class="review-slide">
+                            <div class="review-content">
+                                <span class="quote-mark">“</span>
+                                Their expertise in the judiciary system is truly unmatched. From the very beginning, I
+                                felt a deep sense of confidence and reassurance with their support. They provided
+                                thorough insights and guidance through every legal challenge.
+                                <span class="quote-mark">”</span>
+                            </div>
+                            <p class="review-author">- Amit Singh</p>
+                        </div>
+                        <div class="review-slide">
+                            <div class="review-content">
+                                <span class="quote-mark">“</span>
+                                Professional and efficient service. The team was instrumental in helping me navigate a
+                                complex legal situation with ease. Their clear communication, thorough understanding of
+                                the legal process, and quick responses to my questions.
+                                <span class="quote-mark">”</span>
+                            </div>
+                            <p class="review-author">- Kavita Rao</p>
+                        </div>
+                        <div class="review-slide">
+                            <div class="review-content">
+                                <span class="quote-mark">“</span>
+                                Exceptional legal support. From start to finish, the team provided unparalleled
+                                assistance with my legal issues. Their deep knowledge of the judicial system, prompt
+                                responses, and commitment to resolving my case were truly impressive.
+                                <span class="quote-mark">”</span>
+                            </div>
+                            <p class="review-author">- Sanjay Patel</p>
+                        </div>
+                    </div>
+                    <button class="slide-button left-slide-button">‹</button>
+                    <button class="slide-button right-slide-button">›</button>
+                </div>
+                <div class="sectioN-boundary"></div>
+                <section id="footer" class="footer">
+                    <footer class="footer">
+                        <div class="footer-container">
+                            <div class="footer-section">
+                                <h3>Quick Links</h3>
+                                <ul>
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="#about-us">About Us</a></li>
+                                    <li><a href="#services">Services</a></li>
+                                    <li><a href="#footer">Contact Us</a></li>
+                                </ul>
+                            </div>
+                            <div class="footer-section">
+                                <h3>Contact Us</h3>
+                                <ul>
+                                    <li>1234 Main St, Suite 100</li>
+                                    <li>City, State, 12345</li>
+                                    <li>Email: <a href="mailto:info@nyaybot.com">info@nyaybot.com</a></li>
+                                    <li>Phone: +1 (555) 123-4567</li>
+                                </ul>
+                            </div>
+                            <div class="social-media">
+                                <a href="https://instagram.com" target="_blank" class="social-icon instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="https://facebook.com" target="_blank" class="social-icon facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="https://twitter.com" target="_blank" class="social-icon twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="footer-bottom">
+                            <p>© 2024 NyayBot. All rights reserved.</p>
+                        </div>
+                    </footer>
+                    <script
+                        src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+                    <div class="chatbot-container">
+                        <!-- <div class="chatbot-message">How can I help you?</div>
+                        <img src="C:\Users\saura\OneDrive\Desktop\NyayBot\symbol-removebg-preview.png"
+                            alt="Chatbot Icon" class="chatbot-icon" id="chatbotIcon"> -->
+                    </div>
+
+                    <!-- Hidden Message after Clicking the Icon -->
+                    <div id="chatbotAction" class="hidden">
+                        <p>Do you have an account?</p>
+                        <button onclick="window.location.href='login.html'">Sign In</button>
+                        <button onclick="window.location.href='sign-up.html'">Sign Up</button>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- Bootstrap JS and dependencies -->
+                    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css"
+                        rel="stylesheet">
+                    <script
+                        src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+                        integrity="sha384-oBqDVmMz4fnFO9srlYkfhV7KlnQP2iyd46g1c2t8xhD5xk4HAltnDdP6x6Tz6fyM"
+                        crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+                        integrity="sha384-pzjw8f+ua7Kw1TIq+7zmHKsX8lYH3j99LsGmQ+9WzRd1pq9TR5s6n2MG6R+aD0d1d"
+                        crossorigin="anonymous"></script>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            // Text overlay animation
+                            const elements = document.querySelectorAll('.text-overlay h1, .text-overlay p');
+
+                            elements.forEach((element) => {
+                                const text = element.innerText;
+                                element.innerHTML = ''; // Clear the element's content
+
+                                // Loop through each character in the text
+                                text.split('').forEach((char, index) => {
+                                    const span = document.createElement('span');
+                                    span.textContent = char;
+
+                                    // Apply a delay to each letter based on its position
+                                    span.style.animation = `typing 0.3s steps(1) forwards ${index * 0.06}s`;
+
+                                    // Check if the character is a space
+                                    if (char === ' ') {
+                                        span.style.width = '0.24em'; // Add space width
+                                    }
+
+                                    element.appendChild(span);
+                                });
+                            });
+
+
+                            // Review slider functionality
+                            const reviews = document.querySelectorAll('.review-slide');
+                            let currentReview = 0;
+
+                            function showReview(index) {
+                                reviews.forEach((review, i) => {
+                                    review.style.display = i === index ? 'inline-block' : 'none';
+                                });
+                            }
+
+                            document.querySelector('.left-slide-button').addEventListener('click', () => {
+                                currentReview = (currentReview === 0) ? reviews.length - 1 : currentReview - 1;
+                                showReview(currentReview);
+                            });
+
+                            document.querySelector('.right-slide-button').addEventListener('click', () => {
+                                currentReview = (currentReview === reviews.length - 1) ? 0 : currentReview + 1;
+                                showReview(currentReview);
+                            });
+
+                            showReview(currentReview);
+                        });
+                        document.querySelector('.chatbot-icon').addEventListener('click', function () {
+                            document.getElementById('chatbotAction').classList.toggle('hidden');
+                        });
+
+
+
+
+                    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Law Firm</title>
+    <link rel="icon" href="icon.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        header {
+            background-color: #000000;
+            /* Black */
+            color: #f5c553;
+            /* Gold */
+            height: 100px;
+            /* Height of the header */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 60px;
+            /* Padding around the content */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            /* Shadow for depth */
+            border-bottom: 4px solid #f5c553;
+            /* Gold border at the bottom */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            /* Ensure header stays on top */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 140px;
+            /* Size of the logo */
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            margin-left: 80px;
+            /* Space between logo and navigation */
+        }
+
+        .nav-links ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 60px;
+            /* Space between navigation items */
+        }
+
+        .nav-links ul li a {
+            text-decoration: none;
+            color: #f5c553;
+            /* Gold */
+            font-weight: 700;
+            font-size: 20px;
+            /* Larger font for navigation */
+            transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-links ul li a:hover {
+            color: #ffffff;
+            /* White text on hover */
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+            /* Subtle shadow on hover */
+            transform: translateY(-2px);
+            /* Slight lift effect on hover */
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            /* Space between phone and email */
+            font-size: 18px;
+            /* Font size for contact info */
+        }
+
+        .contact-info div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            /* Space between icon and text */
+        }
+
+        .email-icon {
+            margin-left: -10px;
+            /* Shift email icon to the left */
+        }
+
+        .select-language {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            /* Space between elements */
+            font-size: 18px;
+            /* Font size for language selector */
+            color: #f5c553;
+            /* Gold */
+            cursor: pointer;
+            border: 1px solid #f5c553;
+            padding: 8px 20px;
+            /* Padding inside the button */
+            border-radius: 8px;
+            /* Rounded corners */
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            margin-left: 10px;
+            /* Space from the contact info */
+        }
+
+        .select-language:hover {
+            background-color: #f5c553;
+            /* Gold background on hover */
+            color: #000000;
+            /* Black text on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            /* Subtle shadow on hover */
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                height: auto;
+                padding: 20px;
+                box-shadow: none;
+                border-bottom: none;
+            }
+
+            .nav-links {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            .nav-links ul {
+                flex-direction: column;
+                gap: 20px;
+                /* Space between items in mobile view */
+                align-items: center;
+            }
+
+            .contact-info,
+            .select-language {
+                font-size: 16px;
+                /* Adjust font size for smaller screens */
+            }
+
+            .email-icon {
+                margin-left: 0px;
+                font-size: 34px;
+                /* Reset margin for mobile view */
+            }
+
+            .contact-info,
+            .select-language {
+                font-size: 16px;
+                /* Adjust font size for smaller screens */
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #000000;
+            /* Black */
+            color: #f5c553;
+            /* Gold */
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 60px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border-bottom: 4px solid #f5c553;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            background-color: #000000;
+            /* Black */
+            color: #f5c553;
+            /* Gold */
+            border-bottom: 2px solid #f5c553;
+        }
+
+        .filters label {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .filters select {
+            background-color: #000000;
+            /* Black */
+            color: #f5c553;
+            /* Gold */
+            border: 1px solid #f5c553;
+            /* Gold */
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+            transition: background-color 0.3s ease;
+        }
+
+        .filters select:hover {
+            background-color: #333333;
+            /* Darker black on hover */
+        }
+
+        .lawyer-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            background-color: #000000;
+            /* White */
+            justify-content: space-between;
+            /* Ensures that the cards are evenly distributed */
+        }
+
+        .lawyer-card {
+            background-color: #000000;
+            /* Black */
+            color: #f5c553;
+            /* Gold */
+            border: 3px solid #f5c553;
+            /* Gold */
+            border-radius: 10px;
+            overflow: hidden;
+            width: calc(33.333% - 20px);
+            /* Adjusts the width to ensure three cards per row with a gap */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .lawyer-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .lawyer-info {
+            padding: 15px;
+        }
+
+        .lawyer-info h3 {
+            margin-top: 0;
+        }
+
+        .lawyer-info p {
+            margin: 5px 0;
+        }
+
+        .lawyer-card:hover {
+            transform: translateY(-10px);
+            /* Lift the card */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            /* Enhanced shadow on hover */
+        }
+
+        .lawyer-card:hover img {
+            transform: scale(1.05);
+            /* Slight zoom effect on image */
+        }
+
+        .connect-btn {
+            background-color: #f5c553;
+            /* Gold */
+            color: #000000;
+            /* Black */
+            border: 2px solid #000000;
+            /* Black border */
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .connect-btn:hover {
+            background-color: #000000;
+            /* Black background on hover */
+            color: #f5c553;
+            /* Gold text on hover */
+        }
+
+        .connect-btn:focus {
+            outline: none;
+            box-shadow: 0 0 5px #f5c553;
+            /* Gold glow on focus */
+        }
+
+
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #000000;
+            /* Black */
+            color: #f5c553;
+            /* Gold */
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        .close-btn {
+            color: #f5c553;
+            /* Gold */
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #ffffff;
+            /* White */
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #f5c553;
+            /* Gold */
+            margin-bottom: 10px;
+            background-color: #000000;
+            /* Black */
+            color: #f5c553;
+            /* Gold */
+        }
+
+        button[type="submit"] {
+            background-color: #f5c553;
+            /* Gold */
+            color: #000000;
+            /* Black */
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #e0b74d;
+            /* Slightly darker gold */
+        }
+
+        .photo-modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            /* Dark background */
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            /* Ensure it is on top */
+        }
+
+        .photo-modal img {
+            max-width: 50%;
+            max-height: 50%;
+            border: 3px solid #f5c553;
+            /* Gold border */
+            border-radius: 8px;
+            /* Rounded corners */
+        }
+
+        .close-photo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: #f5c553;
+            /* Gold */
+            cursor: pointer;
+        }
+
+        #search-btn {
+            background-color: #d4af37;
+            /* Gold color */
+            color: #000000;
+            /* Black text */
+            border: 2px solid #000000;
+            /* Black border */
+            padding: 8px 16px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            margin-left: 10px;
+            /* Spacing between dropdown and button */
+        }
+
+        #search-btn:hover {
+            background-color: #000000;
+            /* Black background on hover */
+            color: #d4af37;
+            /* Gold text on hover */
+        }
+
+        #search-btn:focus {
+            outline: none;
+            box-shadow: 0 0 5px #d4af37;
+            /* Gold glow on focus */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo" aria-label="Law Firm Logo">
+            <img src="icon.png" alt="Law Firm Logo">
+        </div>
+        <div class="nav-links" aria-label="Main Navigation">
+            <ul>
+                <li><a href="#">LAWYERS</a></li>
+                <li><a href="#">REVIEWS</a></li>
+                <li><a href="/">HOME</a></li>
+                <li><a href="#">CONTACT US</a></li>
+            </ul>
+        </div>
+        
+        <div class="select-language" aria-label="Select Language">
+
+            <div id="google_element"></div>
+        </div>
+    </header>
+    <section class="filters">
+        <label for="experience">Experience:</label>
+        <select id="experience">
+            <option value="all">All</option>
+            <option value="0-5">0-5 years</option>
+            <option value="5-10">5-10 years</option>
+            <option value="10+">10+ years</option>
+        </select>
+
+
+        <label for="age">Age:</label>
+        <select id="age">
+            <option value="all">All</option>
+            <option value="20-30">20-30</option>
+            <option value="30-40">30-40</option>
+            <option value="40+">40+</option>
+        </select>
+
+        <label for="region">Region:</label>
+        <select id="region">
+            <option value="all">All</option>
+            <option value="north">North</option>
+            <option value="south">South</option>
+            <option value="east">East</option>
+            <option value="west">West</option>
+        </select>
+
+        <label for="expertise">Expertise:</label>
+        <select id="expertise">
+            <option value="all">All</option>
+            <option value="criminal">Criminal</option>
+            <option value="civil">Civil</option>
+            <option value="corporate">Corporate</option>
+        </select>
+        <button id="search-btn">Search</button>
+    </section>
+
+    <div class="lawyer-list">
+        <!-- Lawyer Card 1 -->
+        <div class="lawyer-card">
+            <img src="https://imgeng.jagran.com/images/2024/feb/Fali%20S%20Nariman1708540484060.jpg" alt="Lawyer Photo"
+                class="lawyer-photo"
+                data-large-src="https://imgeng.jagran.com/images/2024/feb/Fali%20S%20Nariman1708540484060.jpg">
+            <div class="lawyer-info">
+                <h3>Fali S. Nariman</h3>
+                <p>Contact: +91 98765 43210</p>
+                <p>Email: fali.nariman@example.com</p>
+                <button class="connect-btn" data-name="Fali S. Nariman"
+                    data-email="fali.nariman@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 2 -->
+        <div class="lawyer-card">
+            <img src="https://images.news18.com/ibnlive/uploads/2024/08/harish-salve-2024-08-41d7f61249b980de7ce23a770a122ba2.jpg"
+                alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://images.news18.com/ibnlive/uploads/2024/08/harish-salve-2024-08-41d7f61249b980de7ce23a770a122ba2.jpg">
+            <div class="lawyer-info">
+                <h3>Harish Salve</h3>
+                <p>Contact: +91 87654 32109</p>
+                <p>Email: harish.salve@example.com</p>
+                <button class="connect-btn" data-name="Harish Salve"
+                    data-email="harish.salve@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 3 -->
+        <div class="lawyer-card">
+            <img src="https://images.hindustantimes.com/Images/popup/2014/10/Jethmalani2.jpg" alt="Lawyer Photo"
+                class="lawyer-photo"
+                data-large-src="https://images.hindustantimes.com/Images/popup/2014/10/Jethmalani2.jpg">
+            <div class="lawyer-info">
+                <h3>Ram Jethmalani</h3>
+                <p>Contact: +91 76543 21098</p>
+                <p>Email: ram.jethmalani@example.com</p>
+                <button class="connect-btn" data-name="Ram Jethmalani"
+                    data-email="ram.jethmalani@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 4 -->
+        <div class="lawyer-card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzLCJJ6p-zI-CS-1zhL5NRzx833urO3lyicA&s"
+                alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzLCJJ6p-zI-CS-1zhL5NRzx833urO3lyicA&s">
+            <div class="lawyer-info">
+                <h3>Indira Jaising</h3>
+                <p>Contact: +91 65432 10987</p>
+                <p>Email: indira.jaising@example.com</p>
+                <button class="connect-btn" data-name="Indira Jaising"
+                    data-email="indira.jaising@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 5 -->
+        <div class="lawyer-card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbHW2rfBEiJXJ4-RoedV4DRsPK-1ih5brCEg&s"
+                alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbHW2rfBEiJXJ4-RoedV4DRsPK-1ih5brCEg&s">
+            <div class="lawyer-info">
+                <h3>K.K. Venugopal</h3>
+                <p>Contact: +91 54321 09876</p>
+                <p>Email: kk.venugopal@example.com</p>
+                <button class="connect-btn" data-name="K.K. Venugopal"
+                    data-email="kk.venugopal@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 6 -->
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>Arvind Datar</h3>
+                <p>Contact: +91 43210 98765</p>
+                <p>Email: arvind.datar@example.com</p>
+                <button class="connect-btn" data-name="Arvind Datar"
+                    data-email="arvind.datar@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 7 -->
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>Gopal Subramanium</h3>
+                <p>Contact: +91 32109 87654</p>
+                <p>Email: gopal.subramanium@example.com</p>
+                <button class="connect-btn" data-name="Gopal Subramanium"
+                    data-email="gopal.subramanium@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 8 -->
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>P. Chidambaram</h3>
+                <p>Contact: +91 21098 76543</p>
+                <p>Email: p.chidambaram@example.com</p>
+                <button class="connect-btn" data-name="P. Chidambaram"
+                    data-email="p.chidambaram@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 9 -->
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>Prashant Bhushan</h3>
+                <p>Contact: +91 10987 65432</p>
+                <p>Email: prashant.bhushan@example.com</p>
+                <button class="connect-btn" data-name="Prashant Bhushan"
+                    data-email="prashant.bhushan@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 10 -->
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>Kapil Sibal</h3>
+                <p>Contact: +91 09876 54321</p>
+                <p>Email: kapil.sibal@example.com</p>
+                <button class="connect-btn" data-name="Kapil Sibal"
+                    data-email="kapil.sibal@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 1 -->
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>Soli Sorabjee</h3>
+                <p>Contact: +91 12345 67890</p>
+                <p>Email: soli.sorabjee@example.com</p>
+                <button class="connect-btn" data-name="Soli Sorabjee"
+                    data-email="soli.sorabjee@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 2 -->
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>Rajiv Dhawan</h3>
+                <p>Contact: +91 23456 78901</p>
+                <p>Email: rajiv.dhawan@example.com</p>
+                <button class="connect-btn" data-name="Rajiv Dhawan"
+                    data-email="rajiv.dhawan@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 3 -->
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>Rohinton Nariman</h3>
+                <p>Contact: +91 34567 89012</p>
+                <p>Email: rohinton.nariman@example.com</p>
+                <button class="connect-btn" data-name="Rohinton Nariman"
+                    data-email="rohinton.nariman@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 4 -->
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>P. P. Rao</h3>
+                <p>Contact: +91 45678 90123</p>
+                <p>Email: pp.rao@example.com</p>
+                <button class="connect-btn" data-name="P. P. Rao" data-email="pp.rao@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 5 -->
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>Aryama Sundaram</h3>
+                <p>Contact: +91 56789 01234</p>
+                <p>Email: aryama.sundaram@example.com</p>
+                <button class="connect-btn" data-name="Aryama Sundaram"
+                    data-email="aryama.sundaram@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 6 -->
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>Gopal Sankaranarayanan</h3>
+                <p>Contact: +91 67890 12345</p>
+                <p>Email: gopal.sankaranarayanan@example.com</p>
+                <button class="connect-btn" data-name="Gopal Sankaranarayanan"
+                    data-email="gopal.sankaranarayanan@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 7 -->
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>Shyam Divan</h3>
+                <p>Contact: +91 78901 23456</p>
+                <p>Email: shyam.divan@example.com</p>
+                <button class="connect-btn" data-name="Shyam Divan"
+                    data-email="shyam.divan@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 8 -->
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>Anil Divan</h3>
+                <p>Contact: +91 89012 34567</p>
+                <p>Email: anil.divan@example.com</p>
+                <button class="connect-btn" data-name="Anil Divan" data-email="anil.divan@example.com">Connect</button>
+            </div>
+        </div>
+
+        <!-- Lawyer Card 9 -->
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>Ravi Shankar Prasad</h3>
+                <p>Contact: +91 90123 45678</p>
+                <p>Email: ravi.prasad@example.com</p>
+                <button class="connect-btn" data-name="Ravi Shankar Prasad"
+                    data-email="ravi.prasad@example.com">Connect</button>
+            </div>
+        </div>
+
+
+        <div class="lawyer-card">
+            <img src="https://via.placeholder.com/300x200" alt="Lawyer Photo" class="lawyer-photo"
+                data-large-src="https://via.placeholder.com/1200x800">
+            <div class="lawyer-info">
+                <h3>Pinkesh Jain</h3>
+                <p>Contact: +91 12345 67890</p>
+                <p>Email: pinkesh.jain@example.com</p>
+                <button class="connect-btn" data-name="Pinkesh Jain"
+                    data-email="pinkesh.jain@example.com">Connect</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Full-screen Photo Modal -->
+    <div id="photo-modal" class="photo-modal">
+        <span class="close-photo">&times;</span>
+        <img id="modal-photo" src="" alt="Full-Screen Photo">
+    </div>
+
+
+
+    </section>
+
+    <div id="connect-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Contact Lawyer</h2>
+            <p>Name: <span id="modal-lawyer-name"></span></p>
+            <p>Email: <span id="modal-lawyer-email"></span></p>
+            <form id="connect-form">
+                <textarea placeholder="Write your message here..."></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+    <script>
+        function loadGoogleTranslate() {
+            new google.translate.TranslateElement("google_element");
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const connectButtons = document.querySelectorAll('.connect-btn');
+            const modal = document.getElementById('connect-modal');
+            const closeBtn = document.querySelector('.close-btn');
+            const modalLawyerName = document.getElementById('modal-lawyer-name');
+            const modalLawyerEmail = document.getElementById('modal-lawyer-email');
+            const connectForm = document.getElementById('connect-form');
+
+            connectButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const lawyerName = this.getAttribute('data-name');
+                    const lawyerEmail = this.getAttribute('data-email');
+
+                    modalLawyerName.textContent = lawyerName;
+                    modalLawyerEmail.textContent = lawyerEmail;
+
+                    modal.style.display = 'block';
+                });
+            });
+
+            closeBtn.addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            connectForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                // Add form submission logic here
+                alert('Message sent!');
+                modal.style.display = 'none';
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const photoModal = document.getElementById('photo-modal');
+            const modalPhoto = document.getElementById('modal-photo');
+            const closePhoto = document.querySelector('.close-photo');
+
+            document.querySelectorAll('.lawyer-card img').forEach(img => {
+                img.addEventListener('click', function () {
+                    const largeSrc = this.getAttribute('data-large-src');
+                    modalPhoto.src = largeSrc;
+                    photoModal.style.display = 'flex';
+                });
+            });
+
+            closePhoto.addEventListener('click', function () {
+                photoModal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function (event) {x
+                if (event.target === photoModal) {
+                    photoModal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
