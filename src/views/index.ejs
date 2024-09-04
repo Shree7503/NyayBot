@@ -97,6 +97,7 @@
             background-color: #555;
         }
 
+
         body,
         html {
             margin: 0;
@@ -156,6 +157,8 @@
         }
 
         .nav-links ul li a {
+            font-family: "Josefin Sans";
+            font-weight: bold;
             text-decoration: none;
             color: #f5c553;
             /* Gold */
@@ -183,11 +186,13 @@
             }
 
             .nav-links {
+
                 margin-left: 0;
                 margin-top: 10px;
             }
 
             .nav-links ul {
+
                 flex-direction: column;
                 gap: 20px;
                 align-items: center;
@@ -302,13 +307,14 @@
         .text-overlay h1,
         .text-overlay p {
             margin: 20px 10px;
-            padding: 10px;
+            padding: 8px;
             position: relative;
             display: inline-block;
             font-size: 4rem;
             background-color: transparent;
             width: 100%;
-            font-family: 'Garamond', serif;
+            font-family: "Josefin Sans";
+
             text-align: center;
             box-sizing: border-box;
         }
@@ -474,12 +480,15 @@
         }
 
         .about-text h2 {
+            font-family: "Josefin Sans";
+            font-weight: bold;
             margin-top: 0;
             font-size: 2rem;
             /* Larger font size for headings */
         }
 
         .about-text p {
+
             font-size: 1rem;
             /* Standard font size for paragraphs */
             line-height: 1.5;
@@ -536,6 +545,8 @@
         }
 
         .our-services h2 {
+            font-family: "Josefin Sans";
+            font-weight: bold;
             text-align: center;
             /* Center align the heading */
             font-size: 2.5rem;
@@ -655,6 +666,8 @@
         }
 
         .review-section h2 {
+            font-family: "Josefin Sans";
+            font-weight: bold;
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 40px;
@@ -845,18 +858,21 @@
 <body>
     <header>
         <div class="logo" aria-label="Law Firm Logo">
+
             <img src="icon.png" alt="Law Firm Logo">
         </div>
         <div class="nav-links" aria-label="Main Navigation">
             <ul>
-                <li><a href="/info">LAWYERS</a></li>
+                <li><a href="zoom.html">LAWYERS</a></li>
                 <li><a href="#review">REVIEWS</a></li>
-                <li><a href="/">HOME</a></li>
+                <li><a href="intro.html">HOME</a></li>
                 <li><a href="#footer">CONTACT US</a></li>
+
             </ul>
         </div>
         <div class="contact-info" aria-label="Contact Information">
-            <div class="phone-icon" aria-label="Phone Number"></div>
+            <div class="phone-icon" aria-label="Phone Number">
+            </div>
 
         </div>
         <div class="select-language" aria-label="Select Language">
@@ -895,8 +911,7 @@
     <div class="section-boundary"></div>
     <section class="about-us">
         <div class="about-content">
-            <img src="icon.png" alt="About Us Image"
-                class="about-image">
+            <img src="icon.png" alt="About Us Image" class="about-image">
             <div class="about-text">
                 <h2>About Us</h2>
                 <p>NyayBot is an innovative chatbot designed to bridge the trust gap between the Indian judicial system
@@ -1041,7 +1056,7 @@
                             <div class="footer-section">
                                 <h3>Quick Links</h3>
                                 <ul>
-                                    <li><a href="/">Home</a></li>
+                                    <li><a href="intro.html">Home</a></li>
                                     <li><a href="#about-us">About Us</a></li>
                                     <li><a href="#services">Services</a></li>
                                     <li><a href="#footer">Contact Us</a></li>
@@ -1075,9 +1090,9 @@
                     <script
                         src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
                     <div class="chatbot-container">
-                        <!-- <div class="chatbot-message">How can I help you?</div>
+                        <div class="chatbot-message">How can I help you?</div>
                         <img src="C:\Users\saura\OneDrive\Desktop\NyayBot\symbol-removebg-preview.png"
-                            alt="Chatbot Icon" class="chatbot-icon" id="chatbotIcon"> -->
+                            alt="Chatbot Icon" class="chatbot-icon" id="chatbotIcon">
                     </div>
 
                     <!-- Hidden Message after Clicking the Icon -->
@@ -1085,6 +1100,7 @@
                         <p>Do you have an account?</p>
                         <button onclick="window.location.href='login.html'">Sign In</button>
                         <button onclick="window.location.href='sign-up.html'">Sign Up</button>
+
                     </div>
 
 
