@@ -42,4 +42,4 @@ NyayBot offers the following features:
 
 ## Website
 
-NyayBot is live and accessible at [https://nyay-bot.vercel.app].
+NyayBot is live and accessible at https://nyay-bot.vercel.app.
