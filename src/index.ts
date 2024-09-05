@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import path from "path";
+import data from "./info";
 
 const app: Express = express(); 
 
@@ -12,7 +13,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.get("/info", (req: Request, res: Response) => {
-    res.render("info");
+    res.render("info", { data: data });
 });
 
 app.listen(8000, () => {
